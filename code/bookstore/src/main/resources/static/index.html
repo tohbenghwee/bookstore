@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+	<script>
+	function signin(user) {
+		var url = "/auth/signin";
+
+		var xhr = new XMLHttpRequest();
+		xhr.open("POST", url);
+
+		xhr.setRequestHeader("Accept", "application/json");
+		xhr.setRequestHeader("Content-Type", "application/json");
+
+		xhr.onreadystatechange = function () {
+		   if (xhr.readyState === 4) {
+		      console.log(xhr.status);
+		      console.log(xhr.responseText);
+		      if(user === 'manager'){
+		    	  document.getElementById("token1").innerHTML = xhr.responseText;
+		      }else if(user === 'admin'){
+		    	  document.getElementById("token2").innerHTML = xhr.responseText;
+		      }else if(user === 'guest'){
+		    	  document.getElementById("token3").innerHTML = xhr.responseText;
+		      }
+		      
+		   }};
+
+		var data = JSON.stringify({"username":"manager","password":"manager123"});
+
+		xhr.send(data);
+	}
+	</script>
+</head>
+<body>
+
+<h2>Generate Token</h2>
+<table>
+  <tr>
+    <th>Login User</th>
+    <th>Action</th>
+    <th>Token</th>
+  </tr>
+  <tr>
+    <td>Manager</td>
+    <td><button onclick="signin('manager')">Get Token</button></td>
+    <td><textarea id="token1" name="token1" rows="4" cols="50"></textarea></td>
+  </tr>
+  <tr>
+    <td>admin</td>
+    <td><button onclick="signin('admin')">Get Token</button></td>
+    <td><textarea id="token2" name="token2" rows="4" cols="50"></textarea></td>
+  </tr>
+  <tr>
+    <td>guest</td>
+    <td><button onclick="signin('guest')">Get Token</button></td>
+    <td><textarea id="token3" name="token3" rows="4" cols="50"></textarea></td>
+  </tr>
+</table>
+
+
+</body>
+</html>
