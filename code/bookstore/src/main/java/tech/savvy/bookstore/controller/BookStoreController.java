@@ -82,7 +82,7 @@ public class BookStoreController {
 
 	@PreAuthorize("hasAuthority('ROLE_MANAGER')")
 	@GetMapping(value = "/delete-book-record/{isbn}")
-	ResponseEntity<?> deleteEmployee(@PathVariable("isbn") String isbn) {
+	ResponseEntity<?> deleteBookRecord(@PathVariable("isbn") String isbn) {
 		if (bookService.findBookByIsbn(isbn) == null) {
 			throw new BookStoreException(ErrorEnum.BOOK_ISBN_NOT_EXIST.getDescription(),
 					ErrorEnum.BOOK_ISBN_NOT_EXIST.getCode());
